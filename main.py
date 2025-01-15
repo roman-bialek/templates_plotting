@@ -14,7 +14,11 @@ def Setup_global_latex_plt():
     plt.rcParams.update({
         "text.usetex": True,
         "font.family": "serif",
-        "text.latex.preamble": r"\usepackage{amsmath}",
+        "text.latex.preamble": r"\usepackage{amsmath}"
+                             + r"\newcommand{\mrm}[1]{\mathrm{#1}}"
+                             + r"\newcommand{\lrbrac}[1]{\left( #1 \right)}"
+                             + r"\newcommand{\lrbracS}[1]{\left[ #1 \right]}"
+                             + r"\newcommand{\surfint}[2]{ \iint_{\partial{}#1} #2 \; \mrm{d}S}",
         "font.size": 14,
     })
 
@@ -86,15 +90,23 @@ def plot_vanderpol_ode_example(ax):
                     y0 = (1, 0),
                     args = (argdict,),
                     rtol = 1e-5,
-                    atol = 1e-5)
+                    atol = 1e-5,
+                    dense_output = False)
 
+    # t_ls = np.linspace(sol.t[0], sol.t[-1], 100)
     ax.plot(sol.t, sol.y[0,:],
             marker = 'o',
             linestyle = '-',
-            label = "Distance $x$ [m]",
+            label = r"Distance $x$ [m]", # and $\surfint{\Omega}{x^2/2}$",
             mfc='none', # disable marker face color
             )
     # ax.plot(time, velocity, label = r"Velocity $v$ $\left[ \mathrm{m \cdot{} s^{-1}} \right]$")
+    ax.plot(sol.t, sol.y[1, :],
+            marker='s',
+            linestyle='-',
+            label=r"Velocity $\dot{x}$ $\lrbracS{ \mrm{m \cdot s^{-1} } }$",
+            mfc='none',  # disable marker face color
+            )
 
     ax.set_xlabel("Time $t$ [s]")
     ax.set_ylabel("Position $x$ [m]")
@@ -103,6 +115,38 @@ def plot_vanderpol_ode_example(ax):
 
     return
 
+def plot_vanderpol_ode_example_dense_output(ax):
+    argdict = {"mu" : 2.5}
+    sol = solve_ivp(vanderpol_,
+                    t_span = (0, 10),
+                    y0 = (1, 0),
+                    args = (argdict,),
+                    rtol = 1e-9,
+                    atol = 1e-9,
+                    dense_output = True)
+
+    t_ls = np.linspace(sol.t[0], sol.t[-1], 300)
+    y_ls = sol.sol(t_ls)
+    ax.plot(t_ls, y_ls[0,:],
+            marker = 'none',
+            linestyle = '-',
+            label = r"Distance $x$ [m]", # and $\surfint{\Omega}{x^2/2}$",
+            mfc='none', # disable marker face color
+            )
+    # ax.plot(time, velocity, label = r"Velocity $v$ $\left[ \mathrm{m \cdot{} s^{-1}} \right]$")
+    ax.plot(t_ls, y_ls[1, :],
+            marker='none',
+            linestyle='-',
+            label=r"Velocity $\dot{x}$ $\lrbracS{ \mrm{m \cdot s^{-1} } }$",
+            mfc='none',  # disable marker face color
+            )
+
+    ax.set_xlabel("Time $t$ [s]")
+    ax.set_ylabel("Position $x$ [m]")
+
+    ax.legend(loc = "best")
+
+    return
 
 # Press the green button in the gutter to run the script.
 if __name__ == '__main__':
@@ -111,7 +155,13 @@ if __name__ == '__main__':
     f, ax = Gen_fig(nx = 2, ny = 1, enforce_list_output = True)
 
     plot_example(ax[0])
-    plot_vanderpol_ode_example(ax[1])
+
+    plot_dense = True
+    if (plot_dense):
+        plot_vanderpol_ode_example_dense_output(ax[1])
+    else:
+        plot_vanderpol_ode_example(ax[1])
+    #
 
     # test resize of figure
     size_ = f.get_size_inches()
