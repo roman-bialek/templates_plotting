@@ -52,8 +52,19 @@ def Gen_fig(nx = 2, ny = 1, enforce_list_output = True):
 def setup_axis__(ax):
     ax.grid(visible=True, which="major", linestyle="-")
     ax.grid(visible=True, which="minor", linestyle=":")
+
+    # Enable dash-marks on both the specified sides
+    # default is {left, bottom} := true; rest = false
+    ax.tick_params(which = 'both',
+                   bottom=True,
+                   top=True,
+                   left=True,
+                   right=True)
+
     # gotchya: https://stackoverflow.com/questions/19940518/cannot-get-minor-grid-lines-to-appear-in-matplotlib-figure
     ax.minorticks_on()
+
+
     return
 
 
@@ -109,7 +120,7 @@ def plot_vanderpol_ode_example(ax):
             )
 
     ax.set_xlabel("Time $t$ [s]")
-    ax.set_ylabel("Position $x$ [m]")
+    ax.set_ylabel(r"State space value $\lrbrac{x, \, \dot{x}}$")
 
     ax.legend(loc = "best")
 
@@ -142,7 +153,7 @@ def plot_vanderpol_ode_example_dense_output(ax):
             )
 
     ax.set_xlabel("Time $t$ [s]")
-    ax.set_ylabel("Position $x$ [m]")
+    ax.set_ylabel(r"State space value $\lrbrac{x, \, \dot{x}}$")
 
     ax.legend(loc = "best")
 
@@ -152,25 +163,37 @@ def plot_vanderpol_ode_example_dense_output(ax):
 if __name__ == '__main__':
     Setup_global_latex_plt()
 
-    f, ax = Gen_fig(nx = 2, ny = 1, enforce_list_output = True)
+    nx_user = 3
+    f, ax = Gen_fig(nx = nx_user, ny = 1, enforce_list_output = True)
 
     plot_example(ax[0])
 
-    plot_dense = True
-    if (plot_dense):
-        plot_vanderpol_ode_example_dense_output(ax[1])
-    else:
-        plot_vanderpol_ode_example(ax[1])
-    #
+    # plot_dense = True
+    # # switch_case_ = {0 : plot_vanderpol_ode_example(ax[1])}
+    # if (plot_dense):
+    #     plot_vanderpol_ode_example_dense_output(ax[1])
+    # else:
+    #     plot_vanderpol_ode_example(ax[1])
+    # backwards compat. issues:
+    plot_mode = 2
+    match plot_mode:
+        case 0:
+            plot_vanderpol_ode_example(ax[1])
+        case 1:
+            plot_vanderpol_ode_example_dense_output(ax[1])
+        case 2:
+            plot_vanderpol_ode_example(ax[1])
+            plot_vanderpol_ode_example_dense_output(ax[2])
 
     # test resize of figure
     size_ = f.get_size_inches()
-    size_[1] = size_[1] * 2
+    size_[1] = size_[1] * nx_user * 1.5
+    print("Warning: using *1.5 on sizing to enforce space between xlabel and sub-ax title")
     f.set_size_inches(size_)
 
     f.show()
 
-
+    ax[1].set_title("Title test")
     f.savefig("myplot.pdf", format="pdf", bbox_inches="tight")
 
 
