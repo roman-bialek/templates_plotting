@@ -37,8 +37,12 @@ def Gen_fig(nx = 2, ny = 1, enforce_list_output = True):
 
         return fig, axs
 
-    for ax in axs:
+    for ax in axs.reshape(-1):
         setup_axis__(ax)
+
+    if enforce_list_output:
+        axs = axs.reshape(-1) # force flatten
+
     return fig, axs
 
 def setup_axis__(ax):
