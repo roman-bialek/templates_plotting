@@ -4,7 +4,12 @@
 This is a matplotlib plotting utility that I use to quickly setup my figures and plot my data. Feel free to modify what you need. Hopefully you find this useful too.
 
 ## 1. Cloning
-In your folder of interest, perform `git submodules add https://github.com/roman-bialek/templates_plotting.git`. This will add this repo as a git submodule.
+In your folder of interest, perform 
+```git
+git submodules add https://github.com/roman-bialek/templates_plotting.git
+```
+
+This will add this repo as a git submodule.
 
 This implies you can use it within a folder that may already have a `.git` folder present.
 ## 2. Importing the python module
