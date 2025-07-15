@@ -1,5 +1,6 @@
 # Recommended Usage
 *matplotlib will be required, `requirements.txt` etc. has not yet been implemented*
+
 This is a matplotlib plotting utility that I use to quickly setup my figures and plot my data. Feel free to modify what you need. Hopefully you find this useful too.
 
 ## 1. Cloning
