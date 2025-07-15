@@ -6,7 +6,7 @@ This is a matplotlib plotting utility that I use to quickly setup my figures and
 ## 1. Cloning
 In your folder of interest, perform 
 ```git
-git submodules add https://github.com/roman-bialek/templates_plotting.git
+git submodule add https://github.com/roman-bialek/templates_plotting.git
 ```
 
 This will add this repo as a git submodule.
