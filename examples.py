@@ -106,7 +106,7 @@ def plot_vanderpol_ode_example_dense_output(ax):
 
 # Press the green button in the gutter to run the script.
 if __name__ == '__main__':
-    Setup_global_latex_plt()
+    Setup_global_latex_plt(use_rb_preamble=True)
 
     nx_user = 3
     f, ax = Gen_fig(nx = nx_user, ny = 1, enforce_list_output = True)
