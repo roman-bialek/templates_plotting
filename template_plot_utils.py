@@ -2,16 +2,64 @@ import matplotlib.pyplot as plt
 # This has some examples https://matplotlib.org/matplotblog/posts/pyplot-vs-object-oriented-interface/
 
 
-def Setup_global_latex_plt():
+def Setup_global_latex_plt(usetex: bool = True,
+                           font_family: str = 'serif',
+                           font_size: int = 14,
+                           latex_preamble: str = "",
+                           use_rb_preamble: bool = False,):
+    r"""
+    A wrapper function to perform `plt.rcParams.update` with some default
+    settings.
+    # -------------------------------------------------------------------------
+    (call as: [simple])
+    Setup_global_latex_plt()
+
+    (call as: [Latex not installed])
+    Setup_global_latex_plt(usetex=False)
+
+    (call as: [All options])
+    Setup_global_latex_plt(usetex: bool = True,
+                           font_family: str = 'serif',
+                           font_size: int = 14,
+                           latex_preamble: str = "",
+                           use_rb_preamble: bool = False)
+
+    # -------------------------------------------------------------------------
+
+    :param usetex: boolean (true/false) to enable LaTeX / TeX interpreter
+    :param font_family: (See [1] - at bottom)
+    :param font_size:   (see [1]
+    :param latex_preamble: This is a string that is what usually appears
+                           before the LaTeX `\begin{document}`.
+                           This will let you use `\usepackages{}`, but not
+                           probably not all will be compatatible or useful.
+    :param use_rb_preamble: This enables a snippet of roman-bialek's personal
+                           `latex_preamble`.
+    :return: (None)
+
+    For further details see the matplotlib documentation:
+    [1] https://matplotlib.org/stable/users/explain/text/usetex.html
+    """
+
+    if latex_preamble is None:
+        # handle possible assumed user behaviour
+        latex_preamble = ""
+
+    if use_rb_preamble:
+        # should probably be changed to read an external file with your
+        # latex setup. (This was roman-bialek's own setup)
+        latex_preamble = r"\usepackage{amsmath, bm}" \
+             + r"\newcommand{\mrm}[1]{\mathrm{#1}}" \
+             + r"\newcommand{\lrbrac}[1]{\left( #1 \right)}" \
+             + r"\newcommand{\lrbracS}[1]{\left[ #1 \right]}" \
+             + r"\newcommand{\surfint}[2]{ \int_{\partial{}#1} #2 \; \mrm{d}S}"
+    # end if
+
     plt.rcParams.update({
-        "text.usetex": True,
-        "font.family": "serif",
-        "text.latex.preamble": r"\usepackage{amsmath, bm}"
-                             + r"\newcommand{\mrm}[1]{\mathrm{#1}}"
-                             + r"\newcommand{\lrbrac}[1]{\left( #1 \right)}"
-                             + r"\newcommand{\lrbracS}[1]{\left[ #1 \right]}"
-                             + r"\newcommand{\surfint}[2]{ \int_{\partial{}#1} #2 \; \mrm{d}S}",
-        "font.size": 14,
+        "text.usetex": usetex,
+        "font.family": font_family,
+        "text.latex.preamble": latex_preamble,
+        "font.size": font_size,
     })
 
     # SMALL_SIZE = 8
@@ -28,6 +76,13 @@ def Setup_global_latex_plt():
     return
 
 def Gen_fig(nx = 2, ny = 1, enforce_list_output = True):
+    """
+    A wrapper function
+    :param nx:
+    :param ny:
+    :param enforce_list_output:
+    :return:
+    """
     fig, axs = plt.subplots(nx, ny)
 
     if (nx == 1 and ny == 1):
