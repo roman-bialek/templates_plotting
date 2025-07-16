@@ -75,13 +75,29 @@ def Setup_global_latex_plt(usetex: bool = True,
     # plt.rc('figure', titlesize=BIGGER_SIZE)  # fontsize of the figure title
     return
 
-def Gen_fig(nx = 2, ny = 1, enforce_list_output = True):
+def Gen_fig(nx = 1, ny = 1, enforce_list_output = True):
     """
-    A wrapper function
-    :param nx:
-    :param ny:
-    :param enforce_list_output:
-    :return:
+    A wrapper function that uses `plt.subplot()`. It generates an `nx*ny`
+    sub-plot grid. Then each individual axes is formatted automatically.
+
+    # -------------------------------------------------------------------------
+    (call as: [basic])
+    f, axs = Gen_fig() # generates a single figure/axis
+    ax = axs[0]
+
+    (call as: [basic subplots])
+    f, axs = Gen_fig(nx = 2, ny = 1)
+    ax_0 = axs[0]
+    ax_1 = axs[1]
+
+    # -------------------------------------------------------------------------
+    :param nx: number of axes in x-direction
+    :param ny: number of axes in y-direction
+    :param enforce_list_output: if true, this flattens the axes array from
+                                a 2D-array to a list. Additionally if a single
+                                axes is generated, it will place it within
+                                a list.
+    :return: fig, axs
     """
     fig, axs = plt.subplots(nx, ny)
 
@@ -101,6 +117,16 @@ def Gen_fig(nx = 2, ny = 1, enforce_list_output = True):
     return fig, axs
 
 def setup_axis__(ax):
+    """
+    pseudo private helper function to setup axes.
+
+    Note: there is a hard coded grid style here, which should
+    be changed. This should probably be implemented as a class
+    where the linestyle may be specified at the class level.
+
+    Then this would allow the user to setup their own styles
+    and this method would just read that linestyle etc.
+    """
     ax.grid(visible=True, which="major", linestyle="-")
     ax.grid(visible=True, which="minor", linestyle=":")
 
