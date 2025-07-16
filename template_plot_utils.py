@@ -2,10 +2,10 @@ import matplotlib.pyplot as plt
 # This has some examples https://matplotlib.org/matplotblog/posts/pyplot-vs-object-oriented-interface/
 
 
-def Setup_global_latex_plt(usetex: bool = True,
-                           font_family: str = 'serif',
-                           font_size: int = 14,
-                           latex_preamble: str = "",
+def Setup_global_latex_plt(usetex: bool          = True,
+                           font_family: str      = 'serif',
+                           font_size: int        = 14,
+                           latex_preamble: str   = "",
                            use_rb_preamble: bool = False,):
     r"""
     A wrapper function to perform `plt.rcParams.update` with some default
@@ -75,7 +75,9 @@ def Setup_global_latex_plt(usetex: bool = True,
     # plt.rc('figure', titlesize=BIGGER_SIZE)  # fontsize of the figure title
     return
 
-def Gen_fig(nx = 1, ny = 1, enforce_list_output = True):
+def Gen_fig(nx: int = 1,
+            ny: int = 1,
+            enforce_list_output: bool = True):
     """
     A wrapper function that uses `plt.subplot()`. It generates an `nx*ny`
     sub-plot grid. Then each individual axes is formatted automatically.
@@ -132,7 +134,7 @@ def setup_axis__(ax):
 
     # Enable dash-marks on both the specified sides
     # default is {left, bottom} := true; rest = false
-    ax.tick_params(which = 'both',
+    ax.tick_params(which='both',
                    bottom=True,
                    top=True,
                    left=True,
@@ -140,6 +142,5 @@ def setup_axis__(ax):
 
     # gotchya: https://stackoverflow.com/questions/19940518/cannot-get-minor-grid-lines-to-appear-in-matplotlib-figure
     ax.minorticks_on()
-
 
     return
