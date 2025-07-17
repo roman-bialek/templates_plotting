@@ -18,7 +18,7 @@ This implies you can use it within a folder that may already have a `.git` folde
 ### (Windows specific / no git)
 _On the main git page, you can click the green "code" button, and download as a `zip` file. To run seamlessly with the example in section 3, unzip this file into a sub-folder called `templates_plotting`._
 
-_Alternatively, enter the templates_plotting folder and run `readme_example.py`. Note, you will still need to install dependencies. You can use an IDE with most of these installed, e.g. Sypder._
+_Alternatively, enter the `templates_plotting` folder and run `readme_example.py`. Note, you will still need to install dependencies. You can use an IDE with most of these installed, e.g. Sypder._
 ## 2. Importing the python module
 Assuming your current directory is `.` and the submodule name is `templates_plotting`, you can import the module as
 ```python
