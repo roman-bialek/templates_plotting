@@ -29,3 +29,5 @@ if __name__ == "__main__":
     # Change `False` to `True` to enable a local save
     if False:
         f.savefig("plot.pdf", format="pdf", bbox_inches="tight")
+
+    input("Press enter to exit...")
