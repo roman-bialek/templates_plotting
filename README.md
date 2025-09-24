@@ -3,6 +3,8 @@
 
 This is a matplotlib plotting utility that I use to quickly setup my figures and plot my data. Feel free to modify what you need. Hopefully you find this useful too.
 
+*LaTeX will also be required if you wish to use those fonts and packages.*
+
 ## 1. Cloning
 In your folder of interest, if no `git` repo is present, please:
 - (windows) Right click, `open in git bash` (_you will need git installed_)
