@@ -6,8 +6,6 @@
 import matplotlib.pyplot as plt
 # This has some examples https://matplotlib.org/matplotblog/posts/pyplot-vs-object-oriented-interface/
 import numpy as np
-from fontTools.ttLib.scaleUpem import visit
-from matplotlib.lines import lineStyles
 from scipy.integrate import solve_ivp
 
 from template_plot_utils import *
